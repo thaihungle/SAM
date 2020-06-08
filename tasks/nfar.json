@@ -1,0 +1,15 @@
+{
+    "task": "nfar",
+    "controller_size": 256,
+    "memory_units": 16,
+    "memory_unit_size": 32,
+    "num_heads": 1,
+    "rd":false,
+    "alphas": [null,null,null],
+    "num_slot": 8,
+    "slot_size": 128,
+    "rel_size": 96,
+    "num_vectors": 8,
+    "num_dims": 16,
+    "iter": 1000000
+}

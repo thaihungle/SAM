@@ -1,0 +1,12 @@
+{
+    "task": "nar",
+    "controller_size": 256,
+    "memory_units": 256,
+    "memory_unit_size": 64,
+    "num_heads": 4,
+    "num_slot": 2,
+    "slot_size": 96,
+    "rel_size": 96,
+    "iter": 100000,
+    "data_dir": "./datasets/number_arecall/associative-retrieval.pkl"
+}

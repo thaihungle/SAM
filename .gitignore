@@ -126,4 +126,9 @@ venv.bak/
 dmypy.json
 
 # Pyre type checker
+.idea/
 .pyre/
+*.pkl
+babi/data/
+logs/
+saved_models/

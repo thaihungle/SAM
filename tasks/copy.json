@@ -1,0 +1,14 @@
+{
+    "task": "copy",
+    "controller_size": 256,
+    "memory_units": 128,
+    "memory_unit_size": 32,
+    "num_heads": 1,
+    "num_slot": 8,
+    "slot_size": 96,
+    "rel_size": 96,
+    "seq_width": 32,
+    "min_seq_len": 1,
+    "max_seq_len": 20,
+    "iter": 50000
+}
