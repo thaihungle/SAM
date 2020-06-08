@@ -6,7 +6,7 @@ code reference for NFarthest: https://github.com/L0SG/relational-rnn-pytorch
 code reference for associative retrieval: https://github.com/jiamings/fast-weights  
 code reference for babi: https://github.com/APodolskiy/TPR-RNN-Torch
 
-#Setup
+#Setup  
 torch 1.0.0 or 1.0.1
 ```
 mkdir logs
