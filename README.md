@@ -1,9 +1,9 @@
 # SAM & STM
 source code for Self-attentive Associative Memory  
 arXiv version: https://arxiv.org/abs/2002.03519  
-code reference for NTM tasks: https://github.com/thaihungle/NSM
-code reference for NFarthest: https://github.com/L0SG/relational-rnn-pytorch  
-code reference for associative retrieval: https://github.com/jiamings/fast-weights
+code reference for NTM tasks: https://github.com/thaihungle/NSM  
+code reference for NFarthest: https://github.com/L0SG/relational-rnn-pytorch    
+code reference for associative retrieval: https://github.com/jiamings/fast-weights  
 code reference for babi: https://github.com/APodolskiy/TPR-RNN-Torch
 
 #Setup
