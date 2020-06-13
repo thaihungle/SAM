@@ -72,7 +72,7 @@ class STM(nn.Module):
         if init_alphas[0] is None:
             self.alpha1 = [nn.Parameter(torch.zeros(1))] * step
             for ia, a in enumerate(self.alpha1):
-                setattr(self, 'alpha' + str(ia), self.alpha1[ia])
+                setattr(self, 'alpha1' + str(ia), self.alpha1[ia])
         else:
             self.alpha1 = [init_alphas[0]]* step
 

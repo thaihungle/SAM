@@ -19,7 +19,7 @@
     "task-id": "all"
   },
   "optimizer":{
-    "lr": 0.001,
+    "lr": 0.0006,
     "beta1": 0.9,
     "beta2": 0.99,
     "max_gradient_norm": 5,
