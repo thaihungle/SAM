@@ -1,15 +1,15 @@
 {
   "model": {
     "entity_size": 90,
-    "hidden_size": 40,
+    "hidden_size": 80,
     "role_size": 20,
     "init_limit": 0.10,
     "LN": true
   },
   "trainer":{
     "steps": 1000000,
-    "epochs": 100,
-    "batch_size": 32,
+    "epochs": 500,
+    "batch_size": 128,
     "validation_step": 200,
     "logging_step": 50,
     "use_cuda": true
