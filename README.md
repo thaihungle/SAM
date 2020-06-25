@@ -36,6 +36,11 @@ STM: python run_toys.py -task_json=./tasks/nfar.json -model_name=stm -mode=train
 ```
 
 # Associative retrieval task
+generate data  
+```
+cd datasets/number_arecall
+python number_arecall.py
+```
 STM training  
 ``` 
 python run_nar.py -task_json=./tasks/nar.json -mode=train
