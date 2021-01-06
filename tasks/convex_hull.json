@@ -1,0 +1,14 @@
+{
+    "task": "convex_hull",
+    "controller_size": 256,
+    "memory_units": 20,
+    "memory_unit_size": 64,
+    "num_heads": 4,
+    "num_slot": 8,
+    "slot_size": 128,
+    "rel_size": 96,
+    "data_dir_train": "./datasets/convex_hull/convex_hull_5-50_train.txt",
+    "data_dir_test": "./datasets/convex_hull/convex_hull_5_test.txt",
+    "N_max": 20,
+    "iter": 1000000
+}
