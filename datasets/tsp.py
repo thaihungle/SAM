@@ -54,7 +54,6 @@ def prepare_sample_batch(samples, end_token, out_dim, max_len = 500, random_mode
             else:
                 out_value = int(token)
             output_vec[iii] = out_value
-
         output_vec[iii]=end_token
         # print(input_vec)
         # print(output_vec)
@@ -73,10 +72,10 @@ def prepare_sample_batch(samples, end_token, out_dim, max_len = 500, random_mode
            torch.tensor(output_vecs, dtype=torch.long), \
            total_seq_len, max_out_len
 
-class ConvexHullDataset(Dataset):
+class TSPDataset(Dataset):
 
 
-    def __init__(self, task_params,  curriculum=False, mode="train"):
+    def __init__(self, task_params,  curriculum=False, mode='train'):
         """Initialize a dataset instance for copy task.
 
         Arguments
@@ -85,14 +84,13 @@ class ConvexHullDataset(Dataset):
             A dict containing parameters relevant to copy task.
         """
         self.task_params = task_params
-        self.cur_index = -1
+        self.cur_index = 0
 
         if mode=="train":
             self.train_samples = self.read_file(task_params['data_dir_train'], same_len=True)
             for k,v in self.train_samples.items():
                 print(f"num train of len {k} {len(v)}")
             if curriculum:
-                self.cur_index = 0
                 self.train_samples.sort(key=lambda x: len(x["inputs"]))
         if mode=="test":
             self.test_samples = self.read_file(task_params['data_dir_test'])
@@ -100,40 +98,71 @@ class ConvexHullDataset(Dataset):
             print(f"num test of len {len(self.test_samples)}")
         self.out_dim = task_params["N_max"]+2
         self.in_dim = 2 + self.out_dim
+        self.cur_index = -1
+
+    """
+    assume no batch, no pad, no random label
+    """
+    def get_path_len_naive(self, inputs, pred):
+        total_dis = 0
+        num_p = len(inputs)-1
+        for pi, pv in enumerate(pred):
+            if pi+1<=num_p:
+                if pred[pi + 1] == self.out_dim - 1:
+                    nexp = inputs[0][:2]
+                    curp = inputs[pv-1][:2]
+                    dis = torch.norm(curp - nexp, 2)
+                    total_dis += dis
+                elif pred[pi+1]!=self.out_dim-1:
+                    ni = pred[pi+1]-1
+                    if ni<0 or ni>=num_p:
+                        ni=0
+                    ci = pv-1
+                    if ci<0 or ci>=num_p:
+                        ci=num_p-1
+                    nexp = inputs[ni][:2]
+                    curp = inputs[ci][:2]
+                    dis = torch.norm(curp-nexp, 2)
+                    total_dis+=dis
+        return total_dis
 
 
-    def read_file(self, filepath, same_len=False):
+
+
+
+    def read_file(self, filepaths, same_len=False):
         all_data_blen =[]
         if same_len:
             all_data_blen = {}
-        with open(filepath) as fp:
-            for line in tqdm(fp):
-                xs = []
-                ys = []
-                all_items = line.strip().split()
-                after_output = False
-                i = 0
-                while i < len(all_items):
-                    if not after_output:
-                        if  all_items[i] == "output":
-                            after_output = True
+        for filepath in filepaths:
+            print(filepath)
+            with open(filepath) as fp:
+                for line in tqdm(fp):
+                    xs = []
+                    ys = []
+                    all_items = line.strip().split()
+                    after_output = False
+                    i = 0
+                    while i < len(all_items):
+                        if not after_output:
+                            if  all_items[i] == "output":
+                                after_output = True
+                            else:
+                                xs.append([all_items[i], all_items[i+1]])
+                                i+=1
                         else:
-                            xs.append([all_items[i], all_items[i+1]])
-                            i+=1
-                    else:
-                        ys.append(all_items[i])
-                    i+=1
-                # if len(xs)==20:
-                #     plot_geo.plot_points(xs, ys)
-                if len(xs)<=self.task_params["N_max"]:
-                    if same_len:
-                        if len(xs) not  in all_data_blen:
-                            all_data_blen[len(xs)]=[]
-                        all_data_blen[len(xs)].append({"inputs":xs,"outputs":ys})
-                    else:
-                        all_data_blen.append({"inputs":xs,"outputs":ys})
-
-            return all_data_blen
+                            ys.append(all_items[i])
+                        i+=1
+                    # if len(xs)==10:
+                    #     plot_geo.plot_points(xs, ys)
+                    if len(xs)<=self.task_params["N_max"]:
+                        if same_len:
+                            if len(xs) not  in all_data_blen:
+                                all_data_blen[len(xs)]=[]
+                            all_data_blen[len(xs)].append({"inputs":xs,"outputs":ys})
+                        else:
+                            all_data_blen.append({"inputs":xs,"outputs":ys})
+        return all_data_blen
 
 
 
