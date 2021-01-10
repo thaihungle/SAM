@@ -12,56 +12,22 @@ class A3CSAM(torch.nn.Module):
         self.num_channel = num_inputs[0]
         self.noise = nn.Dropout(0.9)
 
-        if self.input_shape[0] == 3 and self.input_shape[1] == 12:
-            self.conv1 = nn.Conv2d(self.num_channel, 32, 5, stride=1, padding=2)
-            self.maxp1 = nn.MaxPool2d(2, 2)
-            self.conv2 = nn.Conv2d(32, 32, 5, stride=1, padding=1)
-            self.maxp2 = nn.MaxPool2d(2, 2)
 
-            self.conv3 = nn.Conv2d(self.num_channel, 12, 2, stride=1, padding=1)
-            self.maxp3 = nn.MaxPool2d(2, 2)
-            self.conv4 = nn.Conv2d(12, 24, 2, stride=1, padding=1)
-            self.maxp4 = nn.MaxPool2d(2, 2)
-            self.sam = STM(256, 256,
-                                num_slot=4, mlp_size=128,
-                                slot_size=96, out_att_size=64, step=1,
-                                rel_size=96, rd=True)
-            self.lstm = nn.LSTMCell(216, 256)
-            self.lstm.bias_ih.data.fill_(0)
-            self.lstm.bias_hh.data.fill_(0)
-        elif self.input_shape[1]==19:
-            self.conv1 = nn.Conv2d(self.num_channel, 32, 5, stride=1, padding=2)
-            self.maxp1 = nn.MaxPool2d(2, 2)
-            self.conv2 = nn.Conv2d(32, 32, 5, stride=1, padding=1)
-            self.maxp2 = nn.MaxPool2d(2, 2)
-
-            self.conv3 = nn.Conv2d(self.num_channel, 16, 3, stride=1, padding=1)
-            self.maxp3 = nn.MaxPool2d(2, 2)
-            self.conv4 = nn.Conv2d(16, 16, 3, stride=1, padding=1)
-            self.maxp4 = nn.MaxPool2d(2, 2)
-            self.lstm = nn.LSTMCell(912, 256)
-            self.sam = STM(256, 256,
-                                num_slot=4, mlp_size=128,
-                                slot_size=96, out_att_size=64, step=1,
-                                rel_size=96, rd=True)
-            self.lstm.bias_ih.data.fill_(0)
-            self.lstm.bias_hh.data.fill_(0)
-        else:
-            self.conv1 = nn.Conv2d(self.num_channel, 32, 5, stride=1, padding=2)
-            self.maxp1 = nn.MaxPool2d(2, 2)
-            self.conv2 = nn.Conv2d(32, 32, 5, stride=1, padding=1)
-            self.maxp2 = nn.MaxPool2d(2, 2)
-            self.conv3 = nn.Conv2d(32, 64, 4, stride=1, padding=1)
-            self.maxp3 = nn.MaxPool2d(2, 2)
-            self.conv4 = nn.Conv2d(64, 64, 3, stride=1, padding=1)
-            self.maxp4 = nn.MaxPool2d(2, 2)
-            self.sam = STM(256, 256,
-                                num_slot=8, mlp_size=128,
-                                slot_size=96, out_att_size=64, step=1,
-                                rel_size=96, rd=True)
-            self.lstm = nn.LSTMCell(1024, 256)
-            self.lstm.bias_ih.data.fill_(0)
-            self.lstm.bias_hh.data.fill_(0)
+        self.conv1 = nn.Conv2d(self.num_channel, 32, 5, stride=1, padding=2)
+        self.maxp1 = nn.MaxPool2d(2, 2)
+        self.conv2 = nn.Conv2d(32, 32, 5, stride=1, padding=1)
+        self.maxp2 = nn.MaxPool2d(2, 2)
+        self.conv3 = nn.Conv2d(32, 64, 4, stride=1, padding=1)
+        self.maxp3 = nn.MaxPool2d(2, 2)
+        self.conv4 = nn.Conv2d(64, 64, 3, stride=1, padding=1)
+        self.maxp4 = nn.MaxPool2d(2, 2)
+        self.sam = STM(256, 256,
+                            num_slot=8, mlp_size=128,
+                            slot_size=96, out_att_size=64, step=1,
+                            rel_size=96, rd=True)
+        self.lstm = nn.LSTMCell(1024, 256)
+        self.lstm.bias_ih.data.fill_(0)
+        self.lstm.bias_hh.data.fill_(0)
 
         num_outputs = action_space.n
         self.critic_linear = nn.Linear(512, 1)
