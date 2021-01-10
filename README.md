@@ -55,3 +55,9 @@ testing
 ```
 python run_all_babi.py --eval-test
 ```
+
+# RL task
+training
+```
+python run_rl.py --skip_rate 32
+```
