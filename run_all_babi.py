@@ -24,6 +24,10 @@ from baselines.sam.utils import WarmupScheduler
 logger = logging.getLogger(__name__)
 
 
+torch.manual_seed(0)
+random.seed(0)
+np.random.seed(0)
+
 def train(config: Dict[str, Dict],
           serialization_path: str,
           eval_test: bool = False,
